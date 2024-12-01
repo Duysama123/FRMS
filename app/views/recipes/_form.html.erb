@@ -1,0 +1,54 @@
+<%= form_with(model: recipe) do |form| %>
+<% if recipe.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% recipe.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+  <div class="mb-6">
+        <%= form.label :title, class: label_class %>
+          <%= form.text_field :title, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :description, class: label_class %>
+          <%= form.text_area :description, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :instruction, class: label_class %>
+          <%= form.text_area :instruction, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :prep_time, class: label_class %>
+          <%= form.number_field :prep_time, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :cook_time, class: label_class %>
+          <%= form.number_field :cook_time, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :servings, class: label_class %>
+          <%= form.number_field :servings, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :account_id, class: label_class %>
+          <%= form.text_field :account_id, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :image, class: label_class %>
+          <%= form.text_field :image, class: input_class %>
+      </div>
+
+<%= form.submit class: button_class(theme: 'primary') %>
+
+<% if recipe.persisted? %>
+<%= link_to "Cancel", recipe, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", recipes_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_08_130018) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_135758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "password"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +61,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_130018) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -61,6 +77,99 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_130018) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "nutrition_infos", force: :cascade do |t|
+    t.bigint "ingredient_id", null: false
+    t.decimal "calories"
+    t.decimal "protein"
+    t.decimal "carbs"
+    t.decimal "fat"
+    t.decimal "sugar"
+    t.decimal "fiber"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_nutrition_infos_on_ingredient_id"
+  end
+
+  create_table "recipe_categories", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_recipe_categories_on_category_id"
+    t.index ["recipe_id"], name: "index_recipe_categories_on_recipe_id"
+  end
+
+  create_table "recipe_ingredients", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.string "unit", null: false
+    t.boolean "optional", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
+    t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.text "instruction"
+    t.integer "prep_time"
+    t.integer "cook_time"
+    t.integer "servings"
+    t.bigint "account_id", null: false
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_recipes_on_account_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "recipe_id", null: false
+    t.decimal "rating", precision: 2, scale: 1
+    t.text "comment"
+    t.integer "helpful_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_reviews_on_account_id"
+    t.index ["recipe_id"], name: "index_reviews_on_recipe_id"
+  end
+
+  create_table "shopping_lists", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "recipe_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.string "unit", null: false
+    t.boolean "purchased", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_shopping_lists_on_account_id"
+    t.index ["ingredient_id"], name: "index_shopping_lists_on_ingredient_id"
+    t.index ["recipe_id"], name: "index_shopping_lists_on_recipe_id"
+  end
+
+  create_table "steps", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.integer "position"
+    t.text "instruction"
+    t.string "image"
+    t.string "video_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_steps_on_recipe_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,4 +189,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_130018) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "nutrition_infos", "ingredients"
+  add_foreign_key "recipe_categories", "categories"
+  add_foreign_key "recipe_categories", "recipes"
+  add_foreign_key "recipe_ingredients", "ingredients"
+  add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipes", "accounts"
+  add_foreign_key "reviews", "accounts"
+  add_foreign_key "reviews", "recipes"
+  add_foreign_key "shopping_lists", "accounts"
+  add_foreign_key "shopping_lists", "ingredients"
+  add_foreign_key "shopping_lists", "recipes"
+  add_foreign_key "steps", "recipes"
 end

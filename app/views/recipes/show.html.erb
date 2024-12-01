@@ -1,0 +1,49 @@
+<div class="max-w-3xl mx-auto px-4">
+  <div class="flex items-center justify-between">
+    <h1 class="flex-1 font-bold text-3xl">Recipe</h1>
+
+    <div class="flex-wrap lg:flex items-center lg:space-x-3">
+      <%= link_to recipes_path, class: button_class(theme: "transparent") do %>
+      All Recipes
+      <% end %>
+      <%= link_to edit_recipe_path(@recipe), class: button_class(theme:"primary") do %>
+      Edit
+      <% end %>
+    </div>
+  </div>
+
+  <ul class="text-slate-700">
+      <li>
+        <p class="font-semibold">Title:</p>
+        <p><%= @recipe.title %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Description:</p>
+        <p><%= @recipe.description %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Instruction:</p>
+        <p><%= @recipe.instruction %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Prep time:</p>
+        <p><%= @recipe.prep_time %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Cook time:</p>
+        <p><%= @recipe.cook_time %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Servings:</p>
+        <p><%= @recipe.servings %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Account:</p>
+        <p><%= @recipe.account %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Image:</p>
+        <p><%= @recipe.image %></p>
+      </li>
+  </ul>
+</div>

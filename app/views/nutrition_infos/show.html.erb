@@ -1,0 +1,45 @@
+<div class="max-w-3xl mx-auto px-4">
+  <div class="flex items-center justify-between">
+    <h1 class="flex-1 font-bold text-3xl">Nutrition_info</h1>
+
+    <div class="flex-wrap lg:flex items-center lg:space-x-3">
+      <%= link_to nutrition_infos_path, class: button_class(theme: "transparent") do %>
+      All Nutrition_infos
+      <% end %>
+      <%= link_to edit_nutrition_info_path(@nutrition_info), class: button_class(theme:"primary") do %>
+      Edit
+      <% end %>
+    </div>
+  </div>
+
+  <ul class="text-slate-700">
+      <li>
+        <p class="font-semibold">Ingredient:</p>
+        <p><%= @nutrition_info.ingredient %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Calories:</p>
+        <p><%= @nutrition_info.calories %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Protein:</p>
+        <p><%= @nutrition_info.protein %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Carbs:</p>
+        <p><%= @nutrition_info.carbs %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Fat:</p>
+        <p><%= @nutrition_info.fat %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Sugar:</p>
+        <p><%= @nutrition_info.sugar %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Fiber:</p>
+        <p><%= @nutrition_info.fiber %></p>
+      </li>
+  </ul>
+</div>

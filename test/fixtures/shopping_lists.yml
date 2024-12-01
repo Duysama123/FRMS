@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account: one
+  recipe: one
+  ingredient: one
+  quantity: 9.99
+  unit: MyString
+  purchased: false
+
+two:
+  account: two
+  recipe: two
+  ingredient: two
+  quantity: 9.99
+  unit: MyString
+  purchased: false

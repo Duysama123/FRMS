@@ -1,0 +1,42 @@
+<%= form_with(model: recipe_ingredient) do |form| %>
+<% if recipe_ingredient.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(recipe_ingredient.errors.count, "error") %> prohibited this recipe_ingredient from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% recipe_ingredient.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+  <div class="mb-6">
+        <%= form.label :recipe_id, class: label_class %>
+          <%= form.text_field :recipe_id, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :ingredient_id, class: label_class %>
+          <%= form.text_field :ingredient_id, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :quantity, class: label_class %>
+          <%= form.text_field :quantity, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :unit, class: label_class %>
+          <%= form.text_field :unit, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :optional, class: label_class %>
+          <%= form.check_box :optional, class: input_class %>
+      </div>
+
+<%= form.submit class: button_class(theme: 'primary') %>
+
+<% if recipe_ingredient.persisted? %>
+<%= link_to "Cancel", recipe_ingredient, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", recipe_ingredients_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>

@@ -1,0 +1,50 @@
+<%= form_with(model: nutrition_info) do |form| %>
+<% if nutrition_info.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(nutrition_info.errors.count, "error") %> prohibited this nutrition_info from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% nutrition_info.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+  <div class="mb-6">
+        <%= form.label :ingredient_id, class: label_class %>
+          <%= form.text_field :ingredient_id, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :calories, class: label_class %>
+          <%= form.text_field :calories, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :protein, class: label_class %>
+          <%= form.text_field :protein, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :carbs, class: label_class %>
+          <%= form.text_field :carbs, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :fat, class: label_class %>
+          <%= form.text_field :fat, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :sugar, class: label_class %>
+          <%= form.text_field :sugar, class: input_class %>
+      </div>
+  <div class="mb-6">
+        <%= form.label :fiber, class: label_class %>
+          <%= form.text_field :fiber, class: input_class %>
+      </div>
+
+<%= form.submit class: button_class(theme: 'primary') %>
+
+<% if nutrition_info.persisted? %>
+<%= link_to "Cancel", nutrition_info, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", nutrition_infos_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>
