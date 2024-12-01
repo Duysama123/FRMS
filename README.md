@@ -1,11 +1,12 @@
 # README
 
-## GROUP <add-group-name>
+## GROUP <6>
 
-- Member 1: <add-name>
-- Member 2: <add-name>
-- Member 3: <add-name>
-- Member 4: <add-name>
+- Member 1: <Nguyễn Đình Duy>
+- Member 2: <Vũ Văn Thiện>
+- Member 3: <Trần Minh Tân>
+- Member 4: <Nguyễn Xuân Hiếu>
+- Member 5: <Phạm Lê Quỳnh Trang>
 
 ## Starting server
 
