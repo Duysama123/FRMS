@@ -17,6 +17,7 @@ class RecipeCategoriesController < ApplicationController
 
   # GET /recipe_categories/1/edit
   def edit
+    @recipe_category = RecipeCategory.find(params[:id])
   end
 
   # POST /recipe_categories or /recipe_categories.json

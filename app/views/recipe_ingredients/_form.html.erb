@@ -16,9 +16,10 @@
           <%= form.text_field :recipe_id, class: input_class %>
       </div>
   <div class="mb-6">
-        <%= form.label :ingredient_id, class: label_class %>
-          <%= form.text_field :ingredient_id, class: input_class %>
-      </div>
+  <%= form.label :ingredient_id, class: label_class %>
+  <%= form.select :ingredient_id, options_from_collection_for_select(Ingredient.all, :id, :name, selected = recipe_ingredient.ingredient_id), class: input_class %>
+</div>
+
   <div class="mb-6">
         <%= form.label :quantity, class: label_class %>
           <%= form.text_field :quantity, class: input_class %>

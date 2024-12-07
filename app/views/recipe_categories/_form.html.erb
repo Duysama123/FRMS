@@ -16,9 +16,10 @@
           <%= form.text_field :recipe_id, class: input_class %>
       </div>
   <div class="mb-6">
-        <%= form.label :category_id, class: label_class %>
-          <%= form.text_field :category_id, class: input_class %>
-      </div>
+    <%= form.label :category_id, class: label_class %>
+    <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, selected = recipe_category.category_id), class: input_class %>
+  </div>
+
 
 <%= form.submit class: button_class(theme: 'primary') %>
 
