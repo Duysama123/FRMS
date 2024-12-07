@@ -1,38 +1,40 @@
 <%= form_with(model: account) do |form| %>
-<% if account.errors.any? %>
-<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
-  <h2 class="text-lg font-semibold mb-3"><%= pluralize(account.errors.count, "error") %> prohibited this account from being saved:</h2>
-
-  <ul class="list-disc leading-relaxed">
-    <% account.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+  <% if account.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+      <h2 class="text-lg font-semibold mb-3"><%= pluralize(account.errors.count, "error") %> prohibited this account from being saved:</h2>
+      <ul class="list-disc leading-relaxed">
+        <% account.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="mb-6">
-        <%= form.label :username, class: label_class %>
-          <%= form.text_field :username, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :email, class: label_class %>
-          <%= form.text_field :email, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :password, class: label_class %>
-          <%= form.text_field :password, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :role, class: label_class %>
-          <%= form.text_field :role, class: input_class %>
-      </div>
+    <%= form.label :username, class: label_class %>
+    <%= form.text_field :username, class: input_class %>
+  </div>
 
-<%= form.submit class: button_class(theme: 'primary') %>
+  <div class="mb-6">
+    <%= form.label :email, class: label_class %>
+    <%= form.text_field :email, class: input_class %>
+  </div>
 
-<% if account.persisted? %>
-<%= link_to "Cancel", account, class: "text-neutral-700 underline inline-block ml-3" %>
-<% else %>
-<%= link_to "Cancel", accounts_path, class:  "text-neutral-700 underline inline-block ml-3" %>
-<% end %>
+  <div class="mb-6">
+    <%= form.label :password, class: label_class %>
+    <%= form.text_field :password, class: input_class %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :role, class: label_class %>
+    <%= form.select :role, options_for_select(["admin", "user", "moderator"], account.role), class: input_class %>
+  </div>
+
+  <%= form.submit class: button_class(theme: 'primary') %>
+
+  <% if account.persisted? %>
+    <%= link_to "Cancel", account, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% else %>
+    <%= link_to "Cancel", accounts_path, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% end %>
 <% end %>
