@@ -4,7 +4,7 @@ class Ingredient < ApplicationRecord
   has_many :shopping_lists
   has_one :nutrition_info
 
-  
+
   validates_presence_of :name, :description 
    
   validates_length_of :name, maximum: 50
