@@ -11,9 +11,6 @@ class Review < ApplicationRecord
      # Validate format for rating to ensure it has one decimal place
   validates_format_of :rating, with: /\A\d+(\.\d{1})?\z/
    
-     # Validate presence for comment
-  validates_presence_of :comment
-   
      # Validate numericality for helpful_count
   validates_numericality_of :helpful_count, only_integer: true, greater_than_or_equal_to: 0
    
