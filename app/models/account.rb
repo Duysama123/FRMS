@@ -5,8 +5,8 @@ has_many :shopping_lists
  # Phương thức để lấy tên các associations
  def self.association_names
   self.reflect_on_all_associations.map(&:name)
+end
 
-   self.reflect_on_all_associations.map(&:name)
   validates_presence_of :username, :email, :password
   
   validates_uniqueness_of :username, :email, :password
@@ -20,7 +20,7 @@ has_many :shopping_lists
   private
     
   def set_default_role
-        self.role ||= 'user'
-  end
+      self.role ||= 'user'
 end
+
 end
