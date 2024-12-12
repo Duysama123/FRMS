@@ -7,4 +7,8 @@ class Recipe < ApplicationRecord
   has_many :categories, through: :recipe_categories
   has_many :reviews
   has_many :shopping_lists
+
+  validates :title, :description, :instruction, :prep_time, :cook_time, :servings, presence: true
+  validates :title, length: { maximum: 255 }
+  validates :prep_time, :cook_time, :servings, numericality: { only_integer: true, greater_than: 0 }
 end
