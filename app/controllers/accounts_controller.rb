@@ -1,10 +1,14 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: %i[ show edit update destroy ]
+  class ApplicationController < ActionController::Base
+  before_action :authenticate_user! # Yêu cầu đăng nhập cho tất cả các hành động mặc định
+end
+
 
   # GET /accounts or /accounts.json
   def index
     @accounts = Account.all
   end
+
 
   # GET /accounts/1 or /accounts/1.json
   def show

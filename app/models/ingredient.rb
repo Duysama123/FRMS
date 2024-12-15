@@ -5,6 +5,7 @@ class Ingredient < ApplicationRecord
   has_many :shopping_lists
   has_one :nutrition_info
 
+
   has_one_attached :image
 
   # Validations
@@ -52,5 +53,5 @@ class Ingredient < ApplicationRecord
       errors.add(:image, "dimensions are too large. Maximum allowed is 2000x2000 pixels.")
     end
   end
-  
+ 
 end
