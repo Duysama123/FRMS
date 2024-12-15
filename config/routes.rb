@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks' #nếu sử dụng xác thực github
 
   resources :accounts
   resources :recipes
