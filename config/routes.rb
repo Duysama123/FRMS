@@ -1,12 +1,12 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  authenticate :user, ->(u) { u.admin? } do
+  authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
   end
-
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks' #nếu sử dụng xác thực github
+end
+  
+devise_for :users 
 
   resources :accounts
   resources :recipes
