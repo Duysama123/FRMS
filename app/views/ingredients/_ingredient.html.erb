@@ -11,7 +11,11 @@
 
   <p>
     <strong>Image:</strong>
-    <%= ingredient.image %>
+    <% if ingredient.image.attached? %>
+      <%= image_tag url_for(ingredient.image), alt: ingredient.name, class: "your-css-class" %>
+    <% else %>
+      No image available
+    <% end %>
   </p>
-
 </div>
+

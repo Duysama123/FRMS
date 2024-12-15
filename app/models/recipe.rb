@@ -8,6 +8,9 @@ class Recipe < ApplicationRecord
   has_many :reviews
   has_many :shopping_lists
 
+  has_one_attached :image
+  has_one_attached :video
+  
   validates :title, :description, :instruction, :prep_time, :cook_time, :servings, presence: true
   validates :title, length: { maximum: 255 }
   validates :prep_time, :cook_time, :servings, numericality: { only_integer: true, greater_than: 0 }

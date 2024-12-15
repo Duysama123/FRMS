@@ -15,23 +15,39 @@
   <ul class="text-slate-700">
       <li>
         <p class="font-semibold">Recipe:</p>
-        <p><%= @step.recipe %></p>
+        <p><%= @step.recipe.title %></p>
       </li>
       <li>
         <p class="font-semibold">Position:</p>
         <p><%= @step.position %></p>
       </li>
       <li>
+        <p class="font-semibold">Name:</p>
+        <p><%= @step.name %></p>
+      </li>
+      <li>
         <p class="font-semibold">Instruction:</p>
-        <p><%= @step.instruction %></p>
+<% if @step.instruction.present? %>
+  <ol style="list-style-type: decimal; padding-left: 16px;">
+    <% @step.instruction.split("\n").each do |line| %>
+      <% if line.strip.present? %>
+        <li><%= line.strip %></li>
+      <% end %>
+    <% end %>
+  </ol>
+<% else %>
+  <p>No instruction available for this step.</p>
+<% end %>
+        </p>
       </li>
-      <li>
+       <li>
         <p class="font-semibold">Image:</p>
-        <p><%= @step.image %></p>
+        <% if @step.image.attached? %>
+          <%= image_tag url_for(@step.image), alt: @step.name, style: "max-width: 300px; height: auto; object-fit: cover; border-radius: 8px;" %>
+        <% else %>
+          <p>No image available</p>
+        <% end %>
       </li>
-      <li>
-        <p class="font-semibold">Video url:</p>
-        <p><%= @step.video_url %></p>
-      </li>
+      
   </ul>
 </div>

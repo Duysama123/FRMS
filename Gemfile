@@ -79,3 +79,4 @@ gem 'pg', '1.3.5'
 gem "dotenv-rails"
 gem 'bcrypt', '~> 3.1.7'
 
+

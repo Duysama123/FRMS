@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_135758) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,6 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_135758) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "video_url"
     t.index ["account_id"], name: "index_recipes_on_account_id"
   end
 
@@ -166,9 +167,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_135758) do
     t.integer "position"
     t.text "instruction"
     t.string "image"
-    t.string "video_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["recipe_id"], name: "index_steps_on_recipe_id"
   end
 

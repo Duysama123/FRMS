@@ -1,42 +1,45 @@
-<%= form_with(model: step) do |form| %>
-<% if step.errors.any? %>
-<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
-  <h2 class="text-lg font-semibold mb-3"><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+<%= form_with(model: step, multipart: true) do |form| %>
+  <% if step.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+      <h2 class="text-lg font-semibold mb-3"><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+      <ul class="list-disc leading-relaxed">
+        <% step.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <ul class="list-disc leading-relaxed">
-    <% step.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+  <div class="mb-6">
+    <%= form.label :recipe_id, class: label_class %>
+     <%= form.collection_select :recipe_id, Recipe.all, :id, :title, prompt: "Select a Recipe" %>
+  </div>
 
   <div class="mb-6">
-        <%= form.label :recipe_id, class: label_class %>
-          <%= form.text_field :recipe_id, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :position, class: label_class %>
-          <%= form.number_field :position, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :instruction, class: label_class %>
-          <%= form.text_area :instruction, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :image, class: label_class %>
-          <%= form.text_field :image, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :video_url, class: label_class %>
-          <%= form.text_field :video_url, class: input_class %>
-      </div>
+    <%= form.label :position, class: label_class %>
+    <%= form.number_field :position, class: input_class %>
+  </div>
 
-<%= form.submit class: button_class(theme: 'primary') %>
+<div class="mb-6">
+    <%= form.label :name, class: label_class %>
+    <%= form.text_field :name, class: input_class %>
+  </div>
+  
+  <div class="mb-6">
+    <%= form.label :instruction, class: label_class %>
+    <%= form.text_area :instruction, class: input_class %>
+  </div>
 
-<% if step.persisted? %>
-<%= link_to "Cancel", step, class: "text-neutral-700 underline inline-block ml-3" %>
-<% else %>
-<%= link_to "Cancel", steps_path, class:  "text-neutral-700 underline inline-block ml-3" %>
-<% end %>
+  <div class="mb-6">
+    <%= form.label :image, class: label_class %>
+    <%= form.file_field :image, class: input_class %> <!-- Sửa thành file_field để upload tệp -->
+  </div>
+
+  <%= form.submit class: button_class(theme: 'primary') %>
+
+  <% if step.persisted? %>
+    <%= link_to "Cancel", step, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% else %>
+    <%= link_to "Cancel", steps_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+  <% end %>
 <% end %>

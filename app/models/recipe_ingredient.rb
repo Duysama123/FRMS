@@ -1,16 +1,11 @@
-class RecipeIngredient < ApplicationRecord
-  belongs_to :recipe
-  belongs_to :ingredient
+class Ingredient < ApplicationRecord
+  # Associations
+  has_many :recipe_ingredients
+  has_many :recipes, through: :recipe_ingredients
+  has_many :shopping_lists
+  has_one :nutrition_info
 
-  validates_presence_of :quantity, :unit 
-  
-  validates_numericality_of :quantity, greater_than: 0 
-    
-  validates_length_of :unit, maximum: 15 
-    
-  after_initialize :set_default_optional, if: :new_record? 
-  private 
-  def set_default_optional 
-     self.optional ||= false 
-   end
+  # Validations
+  validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
+  validates :description, presence: true
 end

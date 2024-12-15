@@ -1,5 +1,5 @@
 class StepsController < ApplicationController
-  before_action :set_step, only: %i[ show edit update destroy ]
+  before_action :set_step, only: %i[show edit update destroy]
 
   # GET /steps or /steps.json
   def index
@@ -8,6 +8,8 @@ class StepsController < ApplicationController
 
   # GET /steps/1 or /steps/1.json
   def show
+    @step = Step.find(params[:id])
+    @recipe = @step.recipe # Gắn recipe liên kết với step
   end
 
   # GET /steps/new
@@ -22,7 +24,10 @@ class StepsController < ApplicationController
   # POST /steps or /steps.json
   def create
     @step = Step.new(step_params)
-
+    
+    # Log params for debugging
+    Rails.logger.debug("Step Params: #{step_params.inspect}")
+    
     respond_to do |format|
       if @step.save
         format.html { redirect_to step_url(@step), notice: "Step was successfully created." }
@@ -50,7 +55,6 @@ class StepsController < ApplicationController
   # DELETE /steps/1 or /steps/1.json
   def destroy
     @step.destroy
-
     respond_to do |format|
       format.html { redirect_to steps_url, notice: "Step was successfully destroyed." }
       format.json { head :no_content }
@@ -65,6 +69,6 @@ class StepsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def step_params
-      params.require(:step).permit(:recipe_id, :position, :instruction, :image, :video_url)
+      params.require(:step).permit(:recipe_id, :name, :position, :instruction, :image)
     end
 end

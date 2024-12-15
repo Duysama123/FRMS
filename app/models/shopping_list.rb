@@ -3,15 +3,21 @@ class ShoppingList < ApplicationRecord
   belongs_to :recipe
   belongs_to :ingredient
 
-  validates_presence_of :quantity, :unit 
-  
-  validates_numericality_of :quantity, greater_than: 0 
-  
-  validates_length_of :unit, maximum: 15 
- 
-  after_initialize :set_default_purchased, if: :new_record? 
-  private 
-  def set_default_purchased 
-    self.purchased ||= false 
-  end
+  # Validate presence of quantity and unit
+  validates :quantity, :unit, presence: true
+
+  # Validate numericality of quantity (greater than 0)
+  validates :quantity, numericality: { greater_than: 0 }
+
+  # Validate length of unit (maximum length 15 characters)
+  validates :unit, length: { maximum: 15 }
+
+  # Set default value for purchased if it's a new record
+  after_initialize :set_default_purchased, if: :new_record?
+
+  private
+
+  def set_default_purchased
+    self.purchased ||= false
+  end
 end

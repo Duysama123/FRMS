@@ -4,46 +4,77 @@
 
     <div class="flex-wrap lg:flex items-center lg:space-x-3">
       <%= link_to recipes_path, class: button_class(theme: "transparent") do %>
-      All Recipes
+        All Recipes
       <% end %>
       <%= link_to edit_recipe_path(@recipe), class: button_class(theme:"primary") do %>
-      Edit
+        Edit
       <% end %>
     </div>
   </div>
 
-  <ul class="text-slate-700">
-      <li>
-        <p class="font-semibold">Title:</p>
-        <p><%= @recipe.title %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Description:</p>
-        <p><%= @recipe.description %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Instruction:</p>
-        <p><%= @recipe.instruction %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Prep time:</p>
-        <p><%= @recipe.prep_time %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Cook time:</p>
-        <p><%= @recipe.cook_time %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Servings:</p>
-        <p><%= @recipe.servings %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Account:</p>
-        <p><%= @recipe.account %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Image:</p>
-        <p><%= @recipe.image %></p>
-      </li>
+  <ul class="text-slate-700 space-y-4">
+    <li>
+      <p class="font-semibold">Title:</p>
+      <p><%= @recipe.title %></p>
+    </li>
+    <li>
+      <p class="font-semibold">Description:</p>
+      <p><%= @recipe.description %></p>
+    </li>
+    <li>
+      <p class="font-semibold">Instruction:</p>
+        <p>
+          <% if @recipe.instruction.present? %> <!-- Thay 'recipe' thành '@recipe' -->
+            <ol style="list-style-type: decimal; padding-left: 16px;">
+              <% @recipe.instruction.split(/(?<=\.)\s+/).each_with_index do |step, index| %>
+                <% if step.strip.present? %>
+                  <li><%= step.strip %></li>
+                <% end %>
+              <% end %>
+            </ol>
+          <% else %>
+            No instructions available
+          <% end %>
+        </p>
+
+    </li>
+
+    <li>
+      <p class="font-semibold">Prep time:</p>
+      <p><%= @recipe.prep_time %> minutes</p>
+    </li>
+    <li>
+      <p class="font-semibold">Cook time:</p>
+      <p><%= @recipe.cook_time %> minutes</p>
+    </li>
+    <li>
+      <p class="font-semibold">Servings:</p>
+      <p><%= @recipe.servings %> people</p>
+    </li>
+    <li>
+      <p class="font-semibold">Account:</p>
+      <p><%= @recipe.account.username %></p>
+    </li>
+ <li>
+  <p class="font-semibold">Image:</p>
+  <% if @recipe.image.attached? %>
+    <%= image_tag url_for(@recipe.image), alt: @recipe.title, class: "w-64 h-64 object-cover rounded" %>
+  <% else %>
+    <p>No image available</p>
+  <% end %>
+</li>
+<li>
+  <p class="font-semibold">Video:</p>
+  <% if @recipe.video.attached? %>
+    <div class="w-64 h-64">
+      <video class="w-full h-full object-cover rounded" controls>
+        <source src="<%= url_for(@recipe.video) %>" type="<%= @recipe.video.content_type %>">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  <% else %>
+    <p>No video available</p>
+  <% end %>
+</li>
   </ul>
 </div>

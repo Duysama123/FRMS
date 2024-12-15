@@ -22,7 +22,7 @@
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Servings</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Account</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
-                
+                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Video</th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
         
       </tr>
@@ -35,15 +35,47 @@
 
               <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.title %></td>
               <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.description %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.instruction %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.prep_time %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.cook_time %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.servings %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.account %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.image %></td>
-      
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+              <% if recipe.instruction.present? %>
+                <ol style="list-style-type: decimal; padding-left: 16px;">
+                  <% recipe.instruction.split(/(?<=\.)\s+/).each_with_index do |step, index| %>
+                    <% if step.strip.present? %>
+                      <li><%= step.strip %></li>
+                    <% end %>
+                  <% end %>
+                </ol>
+              <% else %>
+                No instructions available
+              <% end %>
+            </td>
+
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.prep_time %>  minutes</td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.cook_time %>  minutes</td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.servings %>  people</td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.account.username%></td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                <% if recipe.image.attached? %>
+                  <%= image_tag url_for(recipe.image), alt: recipe.title, class: "w-24 h-24 object-cover rounded" %> <!-- 24x24 -->
+                <% else %>
+                  No image available
+                <% end %>
+              </td>
+
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                <% if recipe.video.attached? %>
+                  <div class="mt-2 w-full">
+                    <video width="600" height="550" controls class="max-w-full rounded">
+                      <source src="<%= url_for(recipe.video) %>" type="<%= recipe.video.content_type %>">
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                <% else %>
+                  No video available
+                <% end %>
+              </td>
+
+<td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe %></td>
+
       
       <% end %>
       <% end %>

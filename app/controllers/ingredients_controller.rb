@@ -1,5 +1,6 @@
+# app/controllers/ingredients_controller.rb
 class IngredientsController < ApplicationController
-  before_action :set_ingredient, only: %i[ show edit update destroy ]
+  before_action :set_ingredient, only: %i[show edit update destroy]
 
   # GET /ingredients or /ingredients.json
   def index
@@ -65,6 +66,6 @@ class IngredientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ingredient_params
-      params.require(:ingredient).permit(:name, :description, :image)
+      params.require(:ingredient).permit(:name, :description, :image)  # Đảm bảo bạn đã thêm :image ở đây
     end
 end
