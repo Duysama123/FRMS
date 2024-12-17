@@ -1,47 +1,67 @@
-
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
     <h1 class="text-3xl font-bold">Recipe Ingredients</h1>
 
     <%= link_to new_recipe_ingredient_path, class: button_class(theme: "primary") do %>
-    Add New Recipe ingredient
+      Add New Recipe Ingredient
     <% end %>
   </div>
 
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Ingredient</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Quantity</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Unit</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Optional</th>
-                
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
-        
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Method</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Ingredient</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Quantity</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Unit</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Optional</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @recipe_ingredients.each do |recipe_ingredient| %>
-      <%= content_tag :tr, id: dom_id(recipe_ingredient), class: dom_class(recipe_ingredient) do %>
-      
+      <% @recipe_ingredients.group_by { |ri| [ri.recipe, ri.cook_method] }.each do |(recipe, cook_method), ingredients| %>
+        <%= content_tag :tr, class: 'bg-slate-100 dark:bg-slate-800' do %>
+          <!-- Display recipe and method info once for grouped ingredients -->
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= ingredients.size %>"><%= recipe.title %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= ingredients.size %>">
+            <%= cook_method.present? ? cook_method.name : 'N/A' %>
+          </td>
 
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_ingredient.recipe %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_ingredient.ingredient %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_ingredient.quantity %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_ingredient.unit %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_ingredient.optional %></td>
-      
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe_ingredient %></td>
-      
-      <% end %>
+          <% first_ingredient = ingredients.first %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_ingredient.ingredient.name %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_ingredient.quantity %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_ingredient.unit %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+            <% if first_ingredient.image.attached? %>
+              <%= image_tag url_for(first_ingredient.image), style: "height: auto; max-width: 150px; object-fit: cover;" %>
+            <% else %>
+              <p>No image</p>
+            <% end %>
+          </td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_ingredient.optional ? 'Yes' : 'No' %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe_ingredient_path(first_ingredient) %></td>
+        <% end %>
+
+        <% ingredients.drop(1).each do |ingredient| %>
+          <%= content_tag :tr do %>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= ingredient.ingredient.name %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= ingredient.quantity %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= ingredient.unit %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+              <% if ingredient.image.attached? %>
+                <%= image_tag url_for(ingredient.image), style: "max-width: 150px; height: auto; object-fit: cover;" %>
+              <% else %>
+                <p>No image</p>
+              <% end %>
+            </td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= ingredient.optional ? 'Yes' : 'No' %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe_ingredient_path(ingredient) %></td>
+          <% end %>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

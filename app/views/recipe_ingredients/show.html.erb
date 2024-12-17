@@ -4,7 +4,7 @@
 
     <div class="flex-wrap lg:flex items-center lg:space-x-3">
       <%= link_to recipe_ingredients_path, class: button_class(theme: "transparent") do %>
-      All Recipe_ingredients
+      All Recipe Ingredients
       <% end %>
       <%= link_to edit_recipe_ingredient_path(@recipe_ingredient), class: button_class(theme:"primary") do %>
       Edit
@@ -15,11 +15,15 @@
   <ul class="text-slate-700">
       <li>
         <p class="font-semibold">Recipe:</p>
-        <p><%= @recipe_ingredient.recipe %></p>
+        <p><%= @recipe_ingredient.recipe.title %></p>
       </li>
       <li>
+      <p class="font-semibold">Method:</p>
+      <p><%= @recipe_ingredient.cook_method.present? ? @recipe_ingredient.cook_method.name : 'N/A' %></p>
+    </li>
+      <li>
         <p class="font-semibold">Ingredient:</p>
-        <p><%= @recipe_ingredient.ingredient %></p>
+        <p><%= @recipe_ingredient.ingredient.name %></p>
       </li>
       <li>
         <p class="font-semibold">Quantity:</p>
@@ -28,6 +32,15 @@
       <li>
         <p class="font-semibold">Unit:</p>
         <p><%= @recipe_ingredient.unit %></p>
+      </li>
+       <li>
+        <p class="font-semibold text-lg">Image:</p>
+          <% if @recipe_ingredient.image.attached? %>
+            <%= image_tag url_for(@recipe_ingredient.image), alt: @recipe_ingredient.ingredient.name, class: "w-full max-w-xs mx-auto object-cover rounded-md shadow-md" %>
+          <% else %>
+            <p>No image available</p>
+          <% end %>
+
       </li>
       <li>
         <p class="font-semibold">Optional:</p>

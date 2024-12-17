@@ -11,23 +11,41 @@
 </div>
 <% end %>
 
+   <!-- Hộp chọn recipe_id -->
   <div class="mb-6">
-        <%= form.label :recipe_id, class: label_class %>
-          <%= form.text_field :recipe_id, class: input_class %>
-      </div>
+    <%= form.label :recipe_id, "Recipe", class: label_class %>
+    <%= form.collection_select :recipe_id, Recipe.all, :id, :title, { prompt: "Select a Recipe" }, class: input_class %>
+  </div>
+
   <div class="mb-6">
-  <%= form.label :ingredient_id, class: label_class %>
-  <%= form.select :ingredient_id, options_from_collection_for_select(Ingredient.all, :id, :name, selected = recipe_ingredient.ingredient_id), class: input_class %>
+  <%= form.label :cook_method_id, "Cook Method", class: label_class %>
+  <%= form.collection_select :cook_method_id, CookMethod.all, :id, :name,{ prompt: "Select a Cook Method" }, class: input_class %>
+</div>
+
+   <!-- Ô nhập liệu cho ingredient_id -->
+   <div class="mb-6">
+  <%= form.label :ingredient_id, "Ingredient", class: label_class %>
+  <%= form.collection_select :ingredient_id, Ingredient.all, :id, :name,{ prompt: "Select an Ingredient" }, class: input_class %>
 </div>
 
   <div class="mb-6">
         <%= form.label :quantity, class: label_class %>
           <%= form.text_field :quantity, class: input_class %>
       </div>
-  <div class="mb-6">
-        <%= form.label :unit, class: label_class %>
-          <%= form.text_field :unit, class: input_class %>
-      </div>
+ <div class="mb-6">
+  <%= form.label :unit, "Unit", class: label_class %>
+  <%= form.select :unit, options_for_select([
+    "gram", "kilogram", "milliliter", "liter", 
+    "teaspoon", "tablespoon", "cup", 
+    "root", "bundle", "fruit", "clove", "bulb"], 
+    { prompt: "Select a Unit" }), class: input_class, id: "unit_field" %>
+</div>
+  
+   <div class="mb-6">
+    <%= form.label :image, "Image", class: label_class %>
+    <%= form.file_field :image, class: input_class %>
+  </div>
+  
   <div class="mb-6">
         <%= form.label :optional, class: label_class %>
           <%= form.check_box :optional, class: input_class %>
@@ -41,3 +59,21 @@
 <%= link_to "Cancel", recipe_ingredients_path, class:  "text-neutral-700 underline inline-block ml-3" %>
 <% end %>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const quantityField = document.getElementById("quantity_field");
+    const unitField = document.getElementById("unit_field");
+
+    quantityField.addEventListener("input", function() {
+      const quantity = parseFloat(quantityField.value);
+      if (quantity === 1) {
+        // Adjust unit for singular form
+        unitField.value = unitField.value.replace(/s$/, ''); // Remove plural form
+      } else if (quantity > 1) {
+        // Adjust unit for plural form
+        unitField.value = unitField.value.replace(/$/, 's'); // Add plural form
+      }
+    });
+  });
+</script>

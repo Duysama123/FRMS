@@ -9,6 +9,8 @@ class IngredientsController < ApplicationController
 
   # GET /ingredients/1 or /ingredients/1.json
   def show
+    @ingredient = Ingredient.find(params[:id])
+    @nutrition_info = @ingredient.nutrition_info # Thêm dòng này nếu cần thiết
   end
 
   # GET /ingredients/new
@@ -58,6 +60,8 @@ class IngredientsController < ApplicationController
     end
   end
 
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ingredient
@@ -68,4 +72,6 @@ class IngredientsController < ApplicationController
     def ingredient_params
       params.require(:ingredient).permit(:name, :description, :image)  # Đảm bảo bạn đã thêm :image ở đây
     end
+
+    
 end

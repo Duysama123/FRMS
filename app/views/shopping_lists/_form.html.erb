@@ -1,47 +1,64 @@
 <%= form_with(model: shopping_list) do |form| %>
-<% if shopping_list.errors.any? %>
-<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
-  <h2 class="text-lg font-semibold mb-3"><%= pluralize(shopping_list.errors.count, "error") %> prohibited this shopping_list from being saved:</h2>
+  <% if shopping_list.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+      <h2 class="text-lg font-semibold mb-3"><%= pluralize(shopping_list.errors.count, "error") %> prohibited this shopping_list from being saved:</h2>
+      <ul class="list-disc leading-relaxed">
+        <% shopping_list.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <ul class="list-disc leading-relaxed">
-    <% shopping_list.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
+ <div class="mb-6">
+    <%= form.label :account_id, class: label_class %>
+    <%= form.select :account_id, options_from_collection_for_select(Account.all, :id, :username, selected = shopping_list.account_id), class: input_class %>
+  </div>
+
+   <div class="mb-6">
+    <%= form.label :recipe_id, "Recipe", class: label_class %>
+    <%= form.collection_select :recipe_id, Recipe.all, :id, :title, { prompt: "Select a Recipe" }, class: input_class %>
+  </div>
+
+<div class="mb-6">
+    <%= form.label :cook_method_id, "Cook Method", class: label_class %>
+    <%= form.collection_select :cook_method_id, CookMethod.all, :id, :name, { prompt: "Select a cooking method" }, class: input_class %>
+  </div>
+
+  <div class="mb-6">
+  <%= form.label :ingredient_id, "Ingredient", class: label_class %>
+  <%= form.collection_select :ingredient_id, Ingredient.all, :id, :name,{ prompt: "Select an Ingredient" }, class: input_class %>
 </div>
-<% end %>
+<div class="mb-6">
+    <%= form.label :image, class: label_class %>
+    <%= form.file_field :image, class: input_class %>
+  </div>
 
   <div class="mb-6">
-  <%= form.label :account_id, class: label_class %>
-  <%= form.select :account_id, options_from_collection_for_select(Account.all, :id, :username, selected = shopping_list.account_id), class: input_class %>
+    <%= form.label :quantity, class: label_class %>
+    <%= form.text_field :quantity, class: input_class %>
+  </div>
+
+  <div class="mb-6">
+  <%= form.label :unit, "Unit", class: label_class %>
+  <%= form.select :unit, options_for_select([
+    "gram", "kilogram", "milliliter", "liter", 
+    "piece", "can", "bag", "bottle", "box", "packet", 
+    "root", "bundle", "fruit", "clove", "bulb", 
+    "head", "jar"
+  ], { prompt: "Select a Unit" }), class: input_class, id: "unit_field" %>
 </div>
 
   <div class="mb-6">
-        <%= form.label :recipe_id, class: label_class %>
-          <%= form.text_field :recipe_id, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :ingredient_id, class: label_class %>
-          <%= form.text_field :ingredient_id, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :quantity, class: label_class %>
-          <%= form.text_field :quantity, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :unit, class: label_class %>
-          <%= form.text_field :unit, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :purchased, class: label_class %>
-          <%= form.check_box :purchased, class: input_class %>
-      </div>
+    <%= form.label :purchased, class: label_class %>
+    <%= form.check_box :purchased, class: input_class %>
+  </div>
 
-<%= form.submit class: button_class(theme: 'primary') %>
+  <%= form.submit class: button_class(theme: 'primary') %>
 
-<% if shopping_list.persisted? %>
-<%= link_to "Cancel", shopping_list, class: "text-neutral-700 underline inline-block ml-3" %>
-<% else %>
-<%= link_to "Cancel", shopping_lists_path, class:  "text-neutral-700 underline inline-block ml-3" %>
-<% end %>
+  <% if shopping_list.persisted? %>
+    <%= link_to "Cancel", shopping_list, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% else %>
+    <%= link_to "Cancel", shopping_lists_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+  <% end %>
 <% end %>

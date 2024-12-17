@@ -58,7 +58,7 @@ group :development do
   # gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+   gem "spring"
 end
 
 group :test do
@@ -78,5 +78,11 @@ gem "sassc-rails"
 gem 'pg', '1.3.5'
 gem "dotenv-rails"
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'sinatra', require: 'sinatra/base'
+gem 'select2-rails'
+
+# Gemfile
+gem 'rack-cors'
 
 

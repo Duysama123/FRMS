@@ -19,9 +19,16 @@
     <%= recipe_ingredient.unit %>
   </p>
 
+<p>
+    <strong>Image:</strong>
+    <%= recipe_ingredient.image %>
+  </p>
   <p>
     <strong>Optional:</strong>
     <%= recipe_ingredient.optional %>
   </p>
-
+<p>
+    <strong>Method:</strong>
+    <%= recipe_ingredient.cook_method.present? ? recipe_ingredient.cook_method.name : 'N/A' %> <!-- Hiển thị phương pháp nấu ăn -->
+  </p>
 </div>

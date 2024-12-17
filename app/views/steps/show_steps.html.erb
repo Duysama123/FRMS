@@ -1,0 +1,75 @@
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Steps for Recipe: <%= @recipe.title %></h1>
+  </div>
+
+<!-- Hiển thị phương pháp nấu ăn ở đầu trang với kiểu dáng đẹp và chữ màu đen -->
+  <% if @recipe.cook_method.present? %>
+    <div class="mb-6 text-center">
+      <div class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-black px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+        <p class="text-2xl font-semibold">
+          <span class="block text-lg font-medium">Cooking Method</span>
+          <span class="block text-xl mt-1"><%= @recipe.cook_method.name %></span>
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="space-y-6">
+    <% @steps.each_with_index do |step, index| %>
+      <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+
+        <!-- Tiêu đề và mô tả bước -->
+        <h2 class="text-2xl font-semibold text-gray-900">Step <%= index + 1 %>: <%= step.name %></h2>
+        <p class="mt-2 text-gray-600 text-lg leading-relaxed"><%= step.instruction.presence || "No instructions available" %></p>
+
+        <% if step.image.attached? %>
+          <div class="mt-4">
+            <%= image_tag url_for(step.image), alt: step.name, class: "custom-image-size mx-auto" %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+
+ <div class="mt-6 text-center">
+  <%= link_to 'Back to Recipe', recipe_path(@recipe), class: "inline-block px-6 py-3 text-lg font-semibold text-black bg-blue-600 hover:bg-blue-700 rounded-lg border-2 border-transparent hover:border-blue-700 shadow-md transition duration-300 ease-in-out transform hover:scale-105" %>
+</div>
+</div>
+
+<style>
+  .custom-image-size {
+    max-width: 500px;
+    max-height: 500px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+    /* Hiệu ứng hover và hiệu ứng phóng to cho liên kết */
+  .hover\:scale-105:hover {
+    transform: scale(1.05);
+  }
+
+  /* Tạo hiệu ứng bóng đổ và bo góc */
+  .shadow-md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Màu nền khi hover */
+  .hover\:bg-blue-700:hover {
+    background-color: #3b82f6; /* Màu xanh đậm hơn khi hover */
+  }
+
+  /* Hiển thị viền cho liên kết trước khi hover */
+  .border-2 {
+    border-width: 2px;
+  }
+
+  /* Thêm hiệu ứng viền khi hover */
+  .hover\:border-blue-700:hover {
+    border-color: #3b82f6; /* Viền xanh đậm khi hover */
+    color:white;
+  }
+</style>

@@ -1,45 +1,52 @@
-<div class="max-w-3xl mx-auto px-4">
-  <div class="flex items-center justify-between">
-    <h1 class="flex-1 font-bold text-3xl">Nutrition_info</h1>
-
-    <div class="flex-wrap lg:flex items-center lg:space-x-3">
+<div class="max-w-3xl mx-auto px-6 py-8 bg-white shadow-md rounded-lg">
+  <!-- Tiêu đề và liên kết điều hướng -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Nutrition Info</h1>
+    <div class="flex space-x-3">
       <%= link_to nutrition_infos_path, class: button_class(theme: "transparent") do %>
-      All Nutrition_infos
+        All Nutrition Infos
       <% end %>
-      <%= link_to edit_nutrition_info_path(@nutrition_info), class: button_class(theme:"primary") do %>
-      Edit
+      <%= link_to edit_nutrition_info_path(@nutrition_info), class: button_class(theme: "primary") do %>
+        Edit
       <% end %>
     </div>
   </div>
 
-  <ul class="text-slate-700">
-      <li>
-        <p class="font-semibold">Ingredient:</p>
-        <p><%= @nutrition_info.ingredient %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Calories:</p>
-        <p><%= @nutrition_info.calories %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Protein:</p>
-        <p><%= @nutrition_info.protein %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Carbs:</p>
-        <p><%= @nutrition_info.carbs %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Fat:</p>
-        <p><%= @nutrition_info.fat %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Sugar:</p>
-        <p><%= @nutrition_info.sugar %></p>
-      </li>
-      <li>
-        <p class="font-semibold">Fiber:</p>
-        <p><%= @nutrition_info.fiber %></p>
-      </li>
+  <!-- Hiển thị chi tiết Nutrition Info -->
+  <ul class="text-gray-700 space-y-4">
+    <li>
+      <p class="font-semibold text-lg">Ingredient:</p>
+      <p class="text-gray-600"><%= @nutrition_info.ingredient.name %></p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Calories:</p>
+      <p class="text-gray-600"><%= @nutrition_info.calories %> kcal</p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Protein:</p>
+      <p class="text-gray-600"><%= @nutrition_info.protein %> g</p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Carbs:</p>
+      <p class="text-gray-600"><%= @nutrition_info.carbs %> g</p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Fat:</p>
+      <p class="text-gray-600"><%= @nutrition_info.fat %> g</p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Sugar:</p>
+      <p class="text-gray-600"><%= @nutrition_info.sugar %> g</p>
+    </li>
+    <li>
+      <p class="font-semibold text-lg">Fiber:</p>
+      <p class="text-gray-600"><%= @nutrition_info.fiber %> g</p>
+    </li>
   </ul>
+  
+  
+  <!-- Nút quay lại Ingredient -->
+  <div class="flex justify-center mb-6">
+    <%= link_to 'Back to Ingredient', ingredient_path(@nutrition_info.ingredient), class: "px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:text-white hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out font-semibold" %>
+  </div>
 </div>

@@ -1,36 +1,68 @@
-<!-- app/views/ingredients/show.html.erb -->
-<div class="max-w-3xl mx-auto px-4">
-  <div class="flex items-center justify-between">
-    <h1 class="flex-1 font-bold text-3xl">Ingredient</h1>
-
-    <div class="flex-wrap lg:flex items-center lg:space-x-3">
+<div class="max-w-3xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg">
+  <!-- Tiêu đề và liên kết điều hướng -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Ingredient</h1>
+    <div class="flex space-x-3">
       <%= link_to ingredients_path, class: button_class(theme: "transparent") do %>
         All Ingredients
       <% end %>
-      <%= link_to edit_ingredient_path(@ingredient), class: button_class(theme:"primary") do %>
+      <%= link_to edit_ingredient_path(@ingredient), class: button_class(theme: "primary") do %>
         Edit
       <% end %>
     </div>
   </div>
 
-  <ul class="text-slate-700">
+  <!-- Nội dung hiển thị chi tiết -->
+  <ul class="text-gray-700 space-y-4">
     <li>
-      <p class="font-semibold">Name:</p>
-      <p><%= @ingredient.name %></p>
+      <p class="font-semibold text-lg">Name:</p>
+      <p class="text-gray-600"><%= @ingredient.name %></p>
     </li>
     <li>
-      <p class="font-semibold">Description:</p>
-      <p><%= @ingredient.description %></p>
+      <p class="font-semibold text-lg">Description:</p>
+      <p class="text-gray-600"><%= @ingredient.description %></p>
     </li>
     <li>
-      <p class="font-semibold">Image:</p>
-      <p>
-      <% if @ingredient.image.attached? %>
-        <%= image_tag url_for(@ingredient.image), alt: @ingredient.name, class: "your-css-class" %>
-      <% else %>
-        <p>No image available</p>
-      <% end %>
-      </p>
+      <p class="font-semibold text-lg">Image:</p>
+      <div class="flex justify-center items-center my-4">
+        <% if @ingredient.image.attached? %>
+          <%= image_tag url_for(@ingredient.image), 
+                        alt: @ingredient.name, 
+                        class: "max-w-full h-auto rounded-md shadow-lg" %>
+        <% else %>
+          <p class="text-gray-500 italic">No image available</p>
+        <% end %>
+      </div>
     </li>
   </ul>
+
+  <!-- Nút View Nutrition Info căn giữa -->
+  <div class="mt-6 flex justify-center">
+    <%= link_to 'View Nutrition Info', "#", 
+                class: button_class(theme: 'primary') + ' px-6 py-2 rounded-full', 
+                id: "view-nutrition-info-button", 
+                data: { nutrition_info_id: @ingredient.nutrition_info&.id } %>
+  </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("view-nutrition-info-button");
+
+  if (button) {
+    button.addEventListener("click", (event) => {
+      event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
+      const nutritionInfoId = button.dataset.nutritionInfoId;
+
+      if (nutritionInfoId) {
+        // Điều hướng tới trang Nutrition Info nếu ID tồn tại
+        window.location.href = `/nutrition_infos/${nutritionInfoId}`;
+      } else {
+        // Hiển thị thông báo nếu Nutrition Info không tồn tại
+        console.log("No nutrition info available for this ingredient.");
+        alert("This ingredient does not have nutrition info yet.");
+      }
+    });
+  }
+});
+</script>

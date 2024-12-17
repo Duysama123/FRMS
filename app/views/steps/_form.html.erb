@@ -15,6 +15,12 @@
      <%= form.collection_select :recipe_id, Recipe.all, :id, :title, prompt: "Select a Recipe" %>
   </div>
 
+<!-- Cooking Method Selection -->
+  <div class="mb-6">
+    <%= form.label :cook_method_id, "Cook Method", class: label_class %>
+    <%= form.collection_select :cook_method_id, CookMethod.all, :id, :name, { prompt: "Select a cooking method" }, class: input_class %>
+  </div>
+  
   <div class="mb-6">
     <%= form.label :position, class: label_class %>
     <%= form.number_field :position, class: input_class %>

@@ -1,6 +1,6 @@
 <div class="max-w-3xl mx-auto px-4">
-  <div class="flex items-center justify-between">
-    <h1 class="flex-1 font-bold text-3xl">Recipe</h1>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="flex-1 font-bold text-3xl text-slate-900">Recipe</h1>
 
     <div class="flex-wrap lg:flex items-center lg:space-x-3">
       <%= link_to recipes_path, class: button_class(theme: "transparent") do %>
@@ -12,69 +12,104 @@
     </div>
   </div>
 
-  <ul class="text-slate-700 space-y-4">
-    <li>
-      <p class="font-semibold">Title:</p>
-      <p><%= @recipe.title %></p>
-    </li>
-    <li>
-      <p class="font-semibold">Description:</p>
-      <p><%= @recipe.description %></p>
-    </li>
-    <li>
-      <p class="font-semibold">Instruction:</p>
-        <p>
-          <% if @recipe.instruction.present? %> <!-- Thay 'recipe' thành '@recipe' -->
-            <ol style="list-style-type: decimal; padding-left: 16px;">
-              <% @recipe.instruction.split(/(?<=\.)\s+/).each_with_index do |step, index| %>
-                <% if step.strip.present? %>
-                  <li><%= step.strip %></li>
-                <% end %>
-              <% end %>
-            </ol>
-          <% else %>
-            No instructions available
-          <% end %>
-        </p>
-
-    </li>
-
-    <li>
-      <p class="font-semibold">Prep time:</p>
-      <p><%= @recipe.prep_time %> minutes</p>
-    </li>
-    <li>
-      <p class="font-semibold">Cook time:</p>
-      <p><%= @recipe.cook_time %> minutes</p>
-    </li>
-    <li>
-      <p class="font-semibold">Servings:</p>
-      <p><%= @recipe.servings %> people</p>
-    </li>
-    <li>
-      <p class="font-semibold">Account:</p>
-      <p><%= @recipe.account.username %></p>
-    </li>
- <li>
-  <p class="font-semibold">Image:</p>
-  <% if @recipe.image.attached? %>
-    <%= image_tag url_for(@recipe.image), alt: @recipe.title, class: "w-64 h-64 object-cover rounded" %>
-  <% else %>
-    <p>No image available</p>
-  <% end %>
-</li>
-<li>
-  <p class="font-semibold">Video:</p>
-  <% if @recipe.video.attached? %>
-    <div class="w-64 h-64">
-      <video class="w-full h-full object-cover rounded" controls>
-        <source src="<%= url_for(@recipe.video) %>" type="<%= @recipe.video.content_type %>">
-        Your browser does not support the video tag.
-      </video>
+  <div class="space-y-6 text-slate-700">
+    <!-- Title -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Title:</p>
+      <p class="text-xl font-semibold text-slate-900"><%= @recipe.title %></p>
     </div>
-  <% else %>
-    <p>No video available</p>
+
+    <!-- Description -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Description:</p>
+      <p><%= @recipe.description %></p>
+    </div>
+
+    <!-- Cooking Method -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Method:</p>
+      <p><%= @recipe.cook_method.name if @recipe.cook_method.present? %></p>
+    </div>
+
+    <!-- Instruction -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Instruction:</p>
+      <% if @recipe.instruction.present? %>
+        <ol class="list-decimal pl-6">
+          <% @recipe.instruction.split(/(?<=\.)\s+/).each do |step| %>
+            <% if step.strip.present? %>
+              <li><%= step.strip %></li>
+            <% end %>
+          <% end %>
+        </ol>
+      <% else %>
+        <p>No instructions available</p>
+      <% end %>
+    </div>
+
+    <!-- Prep Time -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Prep time:</p>
+      <p><%= @recipe.prep_time %> minutes</p>
+    </div>
+
+    <!-- Cook Time -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Cook time:</p>
+      <p><%= @recipe.cook_time %> minutes</p>
+    </div>
+
+    <!-- Servings -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Servings:</p>
+      <p><%= @recipe.servings %> people</p>
+    </div>
+
+    <!-- Account -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Account:</p>
+      <p><%= @recipe.account.username %></p>
+    </div>
+
+    <!-- Image -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Image:</p>
+      <% if @recipe.image.attached? %>
+        <%= image_tag url_for(@recipe.image), alt: @recipe.title, class: "w-full max-w-xs mx-auto object-cover rounded-md shadow-md" %>
+      <% else %>
+        <p>No image available</p>
+      <% end %>
+    </div>
+
+    <!-- Video -->
+    <div class="flex flex-col space-y-2">
+      <p class="font-semibold text-lg">Video:</p>
+      <% if @recipe.video.attached? %>
+        <div class="w-full max-w-xs mx-auto">
+          <video class="w-full h-auto rounded-md shadow-md" controls>
+            <source src="<%= url_for(@recipe.video) %>" type="<%= @recipe.video.content_type %>">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      <% else %>
+        <p>No video available</p>
+      <% end %>
+    </div>
+
+
+<!-- View Steps and Recipe Ingredients Buttons (Same Row) -->
+<div class="mt-6 flex justify-center space-x-6">
+  <!-- View Steps Button -->
+  <%= link_to recipe_show_steps_path(@recipe), class: "inline-block px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md text-lg font-semibold transform hover:scale-110 transition-all duration-300 ease-in-out", style: "background-color: #3182ce; padding: 12px 24px; color: white; font-size: 18px; text-align: center; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
+    <i class="fas fa-list-check mr-2"></i> View Steps
   <% end %>
-</li>
-  </ul>
+
+  <!-- View Recipe Ingredients Button -->
+  <%= link_to recipe_show_ingredients_path(@recipe), class: "inline-block px-6 py-3 text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md text-lg font-semibold transform hover:scale-110 transition-all duration-300 ease-in-out", style: "background-color: #48bb78; padding: 12px 24px; color: white; font-size: 18px; text-align: center; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
+    <i class="fas fa-utensils mr-2"></i> View Recipe Ingredients
+  <% end %>
+</div>
+
+
+  </div>
 </div>

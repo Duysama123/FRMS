@@ -1,10 +1,10 @@
 <div class="max-w-3xl mx-auto px-4">
   <div class="flex items-center justify-between">
-    <h1 class="flex-1 font-bold text-3xl">Shopping_list</h1>
+    <h1 class="flex-1 font-bold text-3xl">Shopping List Item</h1>
 
     <div class="flex-wrap lg:flex items-center lg:space-x-3">
       <%= link_to shopping_lists_path, class: button_class(theme: "transparent") do %>
-      All Shopping_lists
+      All Shopping List Items
       <% end %>
       <%= link_to edit_shopping_list_path(@shopping_list), class: button_class(theme:"primary") do %>
       Edit
@@ -15,15 +15,19 @@
   <ul class="text-slate-700">
       <li>
         <p class="font-semibold">Account:</p>
-        <p><%= @shopping_list.account %></p>
+        <p><%= @shopping_list.account.username %></p>
       </li>
       <li>
         <p class="font-semibold">Recipe:</p>
-        <p><%= @shopping_list.recipe %></p>
+        <p><%= @shopping_list.recipe.title %></p>
       </li>
       <li>
+      <p class="font-semibold">Method:</p>
+      <p><%= @shopping_list.cook_method.present? ? @shopping_list.cook_method.name : 'N/A' %></p>
+    </li>
+      <li>
         <p class="font-semibold">Ingredient:</p>
-        <p><%= @shopping_list.ingredient %></p>
+        <p><%= @shopping_list.ingredient.name %></p>
       </li>
       <li>
         <p class="font-semibold">Quantity:</p>
@@ -37,5 +41,13 @@
         <p class="font-semibold">Purchased:</p>
         <p><%= @shopping_list.purchased %></p>
       </li>
+       <li>
+      <p class="font-semibold">Ingredient Image:</p>
+      <% if @shopping_list.ingredient.image.attached? %>
+        <%= image_tag url_for(@shopping_list.ingredient.image), style: "max-width: 500px; height: auto; object-fit: cover;" %>
+      <% else %>
+        <p>No image available</p>
+      <% end %>
+    </li>
   </ul>
 </div>

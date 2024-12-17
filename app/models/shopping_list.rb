@@ -2,7 +2,10 @@ class ShoppingList < ApplicationRecord
   belongs_to :account
   belongs_to :recipe
   belongs_to :ingredient
+  belongs_to :cook_method,optional: true
+ 
 
+  has_one_attached :photo
   # Validate presence of quantity and unit
   validates :quantity, :unit, presence: true
 

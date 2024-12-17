@@ -29,4 +29,19 @@
     <%= shopping_list.purchased %>
   </p>
 
+ <!-- Hiển thị phương pháp nấu ăn nếu có -->
+  <% if shopping_list.method.present? %>
+    <p>
+      <strong>Method:</strong>
+      <%= shopping_list.method %>
+    </p>
+  <% end %>
+
+  <!-- Hiển thị ảnh nếu có -->
+  <% if shopping_list.image.present? %>
+    <p>
+      <strong>Image:</strong>
+      <%= image_tag shopping_list.image, alt: "Image for #{shopping_list.ingredient_id}", class: "max-w-xs mx-auto" %>
+    </p>
+  <% end %>
 </div>

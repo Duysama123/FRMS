@@ -1,0 +1,93 @@
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Ingredients for Recipe: <%= @recipe.title %></h1>
+  </div>
+
+  <!-- Hiển thị phương pháp nấu ăn ở đầu trang với kiểu dáng đẹp -->
+  <% if @recipe.cook_method.present? %>
+    <div class="mb-6 text-center">
+      <div class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-black px-8 py-4 rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
+        <p class="text-2xl font-semibold">
+          <span class="block text-lg font-medium">Cooking Method</span>
+          <span class="block text-xl mt-1"><%= @recipe.cook_method.name %></span>
+        </p>
+      </div>
+    </div>
+  <% end %>
+  <div class="space-y-6">
+    <!-- Hiển thị các nguyên liệu -->
+    <% @recipe_ingredients.each_with_index do |ingredient, index| %>
+      <div class="ingredient-card p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out text-center">
+
+        <!-- Tiêu đề nguyên liệu -->
+        <h2 class="ingredient-title text-2xl font-semibold text-gray-900"><%= ingredient.ingredient.name %></h2>
+        <p class="ingredient-details mt-2 text-gray-600 text-lg leading-relaxed"><%= ingredient.quantity %> <%= ingredient.unit %></p>
+
+        <!-- Hiển thị ảnh của nguyên liệu nếu có -->
+        <% if ingredient.image.attached? %>
+          <div class="ingredient-image mt-4">
+            <%= image_tag url_for(ingredient.image), alt: ingredient.ingredient.name, class: "ingredient-custom-image-size mx-auto" %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Link quay lại Recipe -->
+  <div class="mt-6 text-center">
+    <%= link_to 'Back to Recipe', recipe_path(@recipe), class: "back-to-recipe-btn inline-block px-6 py-3 text-lg font-semibold text-black bg-blue-600 hover:bg-blue-700 rounded-lg border-2 border-transparent hover:border-blue-700 shadow-md transition duration-300 ease-in-out transform hover:scale-105" %>
+  </div>
+</div>
+
+<style>
+  /* Thay đổi các lớp CSS để tránh conflict */
+  .ingredient-custom-image-size {
+    max-width: 500px;
+    max-height: 500px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .hover\:scale-110:hover {
+    transform: scale(1.10);
+  }
+
+  .ingredient-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ingredient-title {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .ingredient-details {
+    font-size: 1.125rem;
+  }
+
+  .ingredient-image {
+    margin-top: 1rem;
+  }
+
+  .ingredient-method {
+    margin-top: 1rem;
+  }
+
+  .back-to-recipe-btn {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+
+  .back-to-recipe-btn:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+</style>

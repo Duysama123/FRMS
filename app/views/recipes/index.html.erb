@@ -16,6 +16,7 @@
         
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Title</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Description</th>
+                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Method</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Instruction</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Prep time</th>
                   <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Cook time</th>
@@ -35,6 +36,10 @@
 
               <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.title %></td>
               <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe.description %></td>
+                 <!-- Hiển thị phương pháp nấu ăn -->
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+            <%= recipe.cook_method.name if recipe.cook_method.present? %> <!-- Hiển thị tên phương pháp nấu ăn -->
+          </td>
             <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
               <% if recipe.instruction.present? %>
                 <ol style="list-style-type: decimal; padding-left: 16px;">

@@ -24,4 +24,9 @@
     <%= step.video_url %>
   </p>
 
+<!-- Hiển thị phương pháp nấu ăn -->
+  <p>
+    <strong>Cook Method:</strong>
+    <%= step.cook_method ? step.cook_method.name : "Not specified" %>
+  </p>
 </div>

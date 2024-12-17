@@ -1,6 +1,3 @@
-
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
     <h1 class="text-3xl font-bold">Steps</h1>
@@ -13,31 +10,38 @@
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Position</th>
-                 <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Instruction</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
-                  
-                
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
-        
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Method</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Position</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Instruction</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @steps.each do |step| %>
-      <%= content_tag :tr, id: dom_id(step), class: dom_class(step) do %>
-      
-
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= step.recipe.title %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= step.position %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= step.name %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-              <% if step.instruction.present? %>
+      <% @steps.group_by(&:recipe).each do |recipe, steps| %>
+        <!-- Display Recipe and Method once for each group of steps -->
+        <tr>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= steps.size %>"><%= recipe.title %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= steps.size %>">
+            <% if steps.first.cook_method %>  <!-- Assuming all steps have the same method for this recipe -->
+              <ul>
+                <li><%= steps.first.cook_method.name %></li>  <!-- Display the name of the cooking method -->
+              </ul>
+            <% else %>
+              No cooking method available
+            <% end %>
+          </td>
+          
+          <!-- Display the first step -->
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= steps.first.position %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= steps.first.name %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+            <% if steps.first.instruction.present? %>
               <ol style="list-style-type: decimal; padding-left: 16px;">
-                <% step.instruction.split("\n").each do |line| %>
+                <% steps.first.instruction.split("\n").each do |line| %>
                   <% if line.strip.present? %> <!-- Bỏ qua các dòng trống -->
                     <li><%= line.strip %></li>
                   <% end %>
@@ -46,24 +50,46 @@
             <% else %>
               <p>No instructions available</p>
             <% end %>
+          </td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+            <% if steps.first.image.attached? %>
+              <%= image_tag url_for(steps.first.image), alt: steps.first.name, style: "max-height: 200px; width: auto; object-fit: cover;" %> <!-- 24x24 -->
+            <% else %>
+              No image available
+            <% end %>
+          </td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', step_path(steps.first) %></td>
+        </tr>
 
+        <!-- Display the remaining steps for the current recipe -->
+        <% steps[1..].each do |step| %>
+          <tr>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= step.position %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= step.name %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+              <% if step.instruction.present? %>
+                <ol style="list-style-type: decimal; padding-left: 16px;">
+                  <% step.instruction.split("\n").each do |line| %>
+                    <% if line.strip.present? %>
+                      <li><%= line.strip %></li>
+                    <% end %>
+                  <% end %>
+                </ol>
+              <% else %>
+                <p>No instructions available</p>
+              <% end %>
             </td>
-
-               <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                <% if step.image.attached? %>
-                  <%= image_tag url_for(step.image), alt: step.name, style: "max-height: 200px; width: auto; object-fit: cover;" %> <!-- 24x24 -->
-                <% else %>
-                  No image available
-                <% end %>
-              </td>
-            
-      
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', step %></td>
-      
-      <% end %>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+              <% if step.image.attached? %>
+                <%= image_tag url_for(step.image), alt: step.name, style: "max-height: 200px; width: auto; object-fit: cover;" %>
+              <% else %>
+                No image available
+              <% end %>
+            </td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', step_path(step) %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

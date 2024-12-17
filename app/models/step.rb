@@ -2,7 +2,8 @@ class Step < ApplicationRecord
   belongs_to :recipe
   has_one_attached :image
  
-
+  belongs_to :cook_method # Thêm mối quan hệ với CookMethod
+  
   # Validate position and instruction
   validates :position, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :instruction, presence: true

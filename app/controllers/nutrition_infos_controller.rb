@@ -8,6 +8,7 @@ class NutritionInfosController < ApplicationController
 
   # GET /nutrition_infos/1 or /nutrition_infos/1.json
   def show
+    @nutrition_info = NutritionInfo.find(params[:id])
   end
 
   # GET /nutrition_infos/new
@@ -65,6 +66,6 @@ class NutritionInfosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def nutrition_info_params
-      params.require(:nutrition_info).permit(:ingredient_id, :calories, :protein, :carbs, :fat, :sugar, :fiber)
+      params.require(:nutrition_info).permit(:ingredient_id, :calories, :protein, :carbs, :fat, :sugar, :fiber, :base_unit)
     end
 end

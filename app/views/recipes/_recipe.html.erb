@@ -39,4 +39,9 @@
     <%= recipe.image %>
   </p>
 
+<!-- Hiển thị phương pháp nấu ăn -->
+  <p>
+    <strong>Cook Method:</strong>
+    <%= recipe.cook_method ? recipe.cook_method.name : "Not specified" %>
+  </p>
 </div>

@@ -1,50 +1,86 @@
 <%= form_with(model: nutrition_info) do |form| %>
-<% if nutrition_info.errors.any? %>
-<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
-  <h2 class="text-lg font-semibold mb-3"><%= pluralize(nutrition_info.errors.count, "error") %> prohibited this nutrition_info from being saved:</h2>
+  <% if nutrition_info.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+      <h2 class="text-lg font-semibold mb-3"><%= pluralize(nutrition_info.errors.count, "error") %> prohibited this nutrition_info from being saved:</h2>
+      <ul class="list-disc leading-relaxed">
+        <% nutrition_info.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <ul class="list-disc leading-relaxed">
-    <% nutrition_info.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+  <!-- Ingredient Selection -->
+  <div class="mb-6">
+    <%= form.label :ingredient_id, "Ingredient", class: label_class %>
+    <%= form.collection_select :ingredient_id, Ingredient.all, :id, :name, { prompt: "Select an Ingredient" }, class: input_class %>
+  </div>
 
+  <!-- Base Unit (cột cơ sở) -->
   <div class="mb-6">
-        <%= form.label :ingredient_id, class: label_class %>
-          <%= form.text_field :ingredient_id, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :calories, class: label_class %>
-          <%= form.text_field :calories, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :protein, class: label_class %>
-          <%= form.text_field :protein, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :carbs, class: label_class %>
-          <%= form.text_field :carbs, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :fat, class: label_class %>
-          <%= form.text_field :fat, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :sugar, class: label_class %>
-          <%= form.text_field :sugar, class: input_class %>
-      </div>
-  <div class="mb-6">
-        <%= form.label :fiber, class: label_class %>
-          <%= form.text_field :fiber, class: input_class %>
-      </div>
+    <%= form.label :base_unit, "Base Unit (e.g., 100g, 1kg, serving)", class: label_class %>
+    <%= form.text_field :base_unit, class: input_class, placeholder: "Enter base unit" %>
+  </div>
 
-<%= form.submit class: button_class(theme: 'primary') %>
+  <!-- Calories -->
+  <div class="mb-6">
+    <%= form.label :calories, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :calories, class: input_class, placeholder: "Calories (per base unit)" %>
+      <span class="ml-2">kcal</span> <!-- Đơn vị cho calories -->
+    </div>
+  </div>
 
-<% if nutrition_info.persisted? %>
-<%= link_to "Cancel", nutrition_info, class: "text-neutral-700 underline inline-block ml-3" %>
-<% else %>
-<%= link_to "Cancel", nutrition_infos_path, class:  "text-neutral-700 underline inline-block ml-3" %>
-<% end %>
+  <!-- Protein -->
+  <div class="mb-6">
+    <%= form.label :protein, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :protein, class: input_class, placeholder: "Protein (per base unit)" %>
+      <span class="ml-2">g</span> <!-- Đơn vị cho protein -->
+    </div>
+  </div>
+
+  <!-- Carbs -->
+  <div class="mb-6">
+    <%= form.label :carbs, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :carbs, class: input_class, placeholder: "Carbs (per base unit)" %>
+      <span class="ml-2">g</span> <!-- Đơn vị cho carbs -->
+    </div>
+  </div>
+
+  <!-- Fat -->
+  <div class="mb-6">
+    <%= form.label :fat, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :fat, class: input_class, placeholder: "Fat (per base unit)" %>
+      <span class="ml-2">g</span> <!-- Đơn vị cho fat -->
+    </div>
+  </div>
+
+  <!-- Sugar -->
+  <div class="mb-6">
+    <%= form.label :sugar, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :sugar, class: input_class, placeholder: "Sugar (per base unit)" %>
+      <span class="ml-2">g</span> <!-- Đơn vị cho sugar -->
+    </div>
+  </div>
+
+  <!-- Fiber -->
+  <div class="mb-6">
+    <%= form.label :fiber, class: label_class %>
+    <div class="flex items-center">
+      <%= form.text_field :fiber, class: input_class, placeholder: "Fiber (per base unit)" %>
+      <span class="ml-2">g</span> <!-- Đơn vị cho fiber -->
+    </div>
+  </div>
+
+  <%= form.submit class: button_class(theme: 'primary') %>
+
+  <% if nutrition_info.persisted? %>
+    <%= link_to "Cancel", nutrition_info, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% else %>
+    <%= link_to "Cancel", nutrition_infos_path, class: "text-neutral-700 underline inline-block ml-3" %>
+  <% end %>
 <% end %>

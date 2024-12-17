@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_17_141134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cook_methods", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cooking_methods", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cooking_methods_on_name", unique: true
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -97,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.decimal "fiber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "base_unit"
     t.index ["ingredient_id"], name: "index_nutrition_infos_on_ingredient_id"
   end
 
@@ -117,6 +133,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.boolean "optional", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "cook_method_id"
+    t.string "image"
+    t.index ["cook_method_id"], name: "index_recipe_ingredients_on_cook_method_id"
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
@@ -133,7 +152,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_url"
+    t.bigint "cooking_method_id", null: false
+    t.bigint "cook_method_id", null: false
     t.index ["account_id"], name: "index_recipes_on_account_id"
+    t.index ["cook_method_id"], name: "index_recipes_on_cook_method_id"
+    t.index ["cooking_method_id"], name: "index_recipes_on_cooking_method_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -157,7 +180,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.boolean "purchased", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "method"
+    t.string "image"
+    t.bigint "cook_method_id", null: false
     t.index ["account_id"], name: "index_shopping_lists_on_account_id"
+    t.index ["cook_method_id"], name: "index_shopping_lists_on_cook_method_id"
     t.index ["ingredient_id"], name: "index_shopping_lists_on_ingredient_id"
     t.index ["recipe_id"], name: "index_shopping_lists_on_recipe_id"
   end
@@ -170,6 +197,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.bigint "cooking_method_id"
+    t.bigint "cook_method_id", null: false
+    t.index ["cook_method_id"], name: "index_steps_on_cook_method_id"
+    t.index ["cooking_method_id"], name: "index_steps_on_cooking_method_id"
     t.index ["recipe_id"], name: "index_steps_on_recipe_id"
   end
 
@@ -193,13 +224,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_104721) do
   add_foreign_key "nutrition_infos", "ingredients"
   add_foreign_key "recipe_categories", "categories"
   add_foreign_key "recipe_categories", "recipes"
+  add_foreign_key "recipe_ingredients", "cook_methods"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "accounts"
+  add_foreign_key "recipes", "cook_methods"
+  add_foreign_key "recipes", "cooking_methods"
   add_foreign_key "reviews", "accounts"
   add_foreign_key "reviews", "recipes"
   add_foreign_key "shopping_lists", "accounts"
+  add_foreign_key "shopping_lists", "cook_methods"
   add_foreign_key "shopping_lists", "ingredients"
   add_foreign_key "shopping_lists", "recipes"
+  add_foreign_key "steps", "cook_methods"
+  add_foreign_key "steps", "cooking_methods"
   add_foreign_key "steps", "recipes"
 end
