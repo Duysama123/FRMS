@@ -1,10 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  # Bảo vệ route `/sidekiq` chỉ dành cho admin
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
-   
 
   devise_for :users
 
