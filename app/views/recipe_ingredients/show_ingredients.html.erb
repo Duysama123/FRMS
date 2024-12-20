@@ -21,7 +21,10 @@
 
         <!-- Tiêu đề nguyên liệu -->
         <h2 class="ingredient-title text-2xl font-semibold text-gray-900"><%= ingredient.ingredient.name %></h2>
-        <p class="ingredient-details mt-2 text-gray-600 text-lg leading-relaxed"><%= ingredient.quantity %> <%= ingredient.unit %></p>
+        <p class="ingredient-details mt-2 text-gray-600 text-lg leading-relaxed">
+        <%= ingredient.quantity.to_i == ingredient.quantity ? ingredient.quantity.to_i : ingredient.quantity %> 
+        <%= ingredient.unit %>
+      </p>
 
         <!-- Hiển thị ảnh của nguyên liệu nếu có -->
         <% if ingredient.image.attached? %>

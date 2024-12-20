@@ -1,6 +1,4 @@
 
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
     <h1 class="text-3xl font-bold">Ingredients</h1>
@@ -13,35 +11,28 @@
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Description</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
-                
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Name</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Description</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Image</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @ingredients.each do |ingredient| %>
-      <%= content_tag :tr, id: dom_id(ingredient), class: dom_class(ingredient) do %>
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to ingredient.name, ingredient %></td>
-      
-
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= ingredient.description %></td>
-         <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400 flex items-center justify-center">
-        <% if ingredient.image.attached? %>
-          <%= image_tag url_for(ingredient.image), alt: ingredient.name, style: "width: 100px; height: 100px; object-fit: cover; border-radius: 4px;" %>
-        <% else %>
-          No image available
+        <%= content_tag :tr, id: dom_id(ingredient), class: dom_class(ingredient) do %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= link_to ingredient.name, ingredient %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= ingredient.description %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center flex items-center justify-center">
+            <% if ingredient.image.attached? %>
+              <%= image_tag url_for(ingredient.image), alt: ingredient.name, style: "width: 100px; height: 100px; object-fit: cover; border-radius: 4px;" %>
+            <% else %>
+              No image available
+            <% end %>
+          </td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= link_to 'Show', ingredient %></td>
         <% end %>
-      </td>
-      <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', ingredient %></td>
-      <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

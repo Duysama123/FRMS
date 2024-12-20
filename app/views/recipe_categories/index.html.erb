@@ -1,41 +1,29 @@
-
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
-    <h1 class="text-3xl font-bold">Recipe_categories</h1>
+    <h1 class="text-3xl font-bold">Recipe Categories</h1>
 
     <%= link_to new_recipe_category_path, class: button_class(theme: "primary") do %>
-    Add New Recipe category
+      Add New Recipe category
     <% end %>
   </div>
 
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Category</th>
-                
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
-        
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Recipe</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Category</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @recipe_categories.each do |recipe_category| %>
-      <%= content_tag :tr, id: dom_id(recipe_category), class: dom_class(recipe_category) do %>
-      
-
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_category.recipe %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= recipe_category.category %></td>
-      
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', recipe_category %></td>
-      
-      <% end %>
+        <%= content_tag :tr, id: dom_id(recipe_category), class: dom_class(recipe_category) do %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= recipe_category.recipe.title %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= recipe_category.category.name %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= link_to 'Show', recipe_category %></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

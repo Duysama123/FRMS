@@ -10,30 +10,30 @@
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Ingredient</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Base Unit</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Calories (kcal)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Protein (g)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Carbs (g)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Fat (g)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Sugar (g)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Fiber (g)</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Ingredient</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Base Unit</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Calories (kcal)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Protein (g)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Carbs (g)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Fat (g)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Sugar (g)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Fiber (g)</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @nutrition_infos.each do |nutrition_info| %>
         <%= content_tag :tr, id: dom_id(nutrition_info), class: dom_class(nutrition_info) do %>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.ingredient.name %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.base_unit %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:calories) %> kcal</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:protein) %> g</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:carbs) %> g</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:fat) %> g</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:sugar) %> g</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= nutrition_info.formatted_value(:fiber) %> g</td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', nutrition_info %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.ingredient.name %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.base_unit %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.formatted_value(:calories) %> kcal</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.formatted_value(:protein) %> g</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.formatted_value(:carbs) %> g</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.formatted_value(:fat) %> g</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center" ><%= nutrition_info.formatted_value(:sugar) %> g</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= nutrition_info.formatted_value(:fiber) %> g</td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= link_to 'Show', nutrition_info %></td>
         <% end %>
       <% end %>
     </tbody>

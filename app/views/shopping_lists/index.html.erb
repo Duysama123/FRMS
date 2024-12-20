@@ -10,15 +10,16 @@
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Account</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Method</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Ingredient</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Quantity</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Unit</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Purchased</th>
-        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Account</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Recipe</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Method</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Ingredient</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Image</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Quantity</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Unit</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Purchased</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
@@ -26,40 +27,46 @@
       <% @shopping_lists.group_by { |sl| [sl.account, sl.recipe, sl.recipe.cook_method] }.each do |(account, recipe, cook_method), items| %>
         <%= content_tag :tr, class: 'bg-slate-100 dark:bg-slate-800' do %>
           <!-- Display account, recipe, and method once for grouped items -->
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= items.size %>"><%= account.username %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= items.size %>"><%= recipe.title %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" rowspan="<%= items.size %>"><%= cook_method.present? ? cook_method.name : 'N/A' %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center" rowspan="<%= items.size %>"><%= account.username %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center" rowspan="<%= items.size %>"><%= recipe.title %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center" rowspan="<%= items.size %>"><%= cook_method.present? ? cook_method.name : 'N/A' %></td>
 
           <% first_item = items.first %>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_item.ingredient.name %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= first_item.ingredient.name %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center">
             <% if first_item.ingredient.image.attached? %>
               <%= image_tag url_for(first_item.ingredient.image), style: "max-width: 150px; height: auto; object-fit: cover;" %>
             <% else %>
               <p>No image</p>
             <% end %>
           </td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_item.quantity %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_item.unit %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= first_item.purchased %></td>
-          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', shopping_list_path(first_item) %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center">
+            <%= first_item.quantity.to_i == first_item.quantity ? first_item.quantity.to_i : first_item.quantity %>
+          </td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= first_item.unit %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= first_item.purchased %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= link_to 'Show', shopping_list_path(first_item) %></td>
+          <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center" rowspan="<%= items.size %>">
+            <%= link_to 'Show Full List', full_list_path(account_id: items.first.account.id, recipe_id: items.first.recipe.id), class: button_class(theme: "primary") %>
+          </td>
         <% end %>
 
         <% items.drop(1).each do |item| %>
           <%= content_tag :tr do %>
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= item.ingredient.name %></td>
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= item.ingredient.name %></td>
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center">
               <% if item.ingredient.image.attached? %>
                 <%= image_tag url_for(item.ingredient.image), style: "max-width: 150px; height: auto; object-fit: cover;" %>
               <% else %>
                 <p>No image</p>
               <% end %>
             </td>
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= item.quantity %></td>
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= item.unit %></td>
-           
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= item.purchased %></td>
-            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', shopping_list_path(item) %></td>
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center">
+              <%= item.quantity.to_i == item.quantity ? item.quantity.to_i : item.quantity %>
+            </td>
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= item.unit %></td>
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= item.purchased %></td>
+            <td style="color: black;" class="border border-slate-300 dark:border-slate-700 p-4 text-center"><%= link_to 'Show', shopping_list_path(item) %></td>
           <% end %>
         <% end %>
       <% end %>

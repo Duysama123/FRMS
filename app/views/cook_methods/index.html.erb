@@ -1,38 +1,29 @@
-
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
     <h1 class="text-3xl font-bold">Cook Methods</h1>
 
     <%= link_to new_cook_method_path, class: button_class(theme: "primary") do %>
-    Add New Cook method
+    Add New Cook Method
     <% end %>
   </div>
 
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Description</th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Name</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Description</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @cook_methods.each do |cook_method| %>
-      <%= content_tag :tr, id: dom_id(cook_method), class: dom_class(cook_method) do %>
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to cook_method.name, cook_method %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= cook_method.description %></td>
-       <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', cook_method %></td>
-      
-      
-      <% end %>
+        <%= content_tag :tr, id: dom_id(cook_method), class: dom_class(cook_method) do %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= link_to cook_method.name, cook_method %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= cook_method.description %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-black text-center"><%= link_to 'Show', cook_method %></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

@@ -31,7 +31,9 @@
       </li>
       <li>
         <p class="font-semibold">Quantity:</p>
-        <p><%= @shopping_list.quantity %></p>
+        <p>
+        <%= @shopping_list.quantity.to_i == @shopping_list.quantity ? @shopping_list.quantity.to_i : @shopping_list.quantity %>
+      </p>
       </li>
       <li>
         <p class="font-semibold">Unit:</p>

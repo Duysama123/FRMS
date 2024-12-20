@@ -85,4 +85,8 @@ gem 'select2-rails'
 # Gemfile
 gem 'rack-cors'
 
+gem 'rails_admin'
 
+
+
+gem "sassc-rails"

@@ -1,47 +1,35 @@
-
-
-
 <div class="container mx-auto px-4">
   <div class="flex items-center justify-between flex-wrap mb-6">
     <h1 class="text-3xl font-bold">Reviews</h1>
 
     <%= link_to new_review_path, class: button_class(theme: "primary") do %>
-    Add New Review
+      Add New Review
     <% end %>
   </div>
 
   <table class="table-auto border-collapse border-slate-400 w-full">
     <thead class="bg-slate-50 dark:bg-slate-700">
       <tr>
-        
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Account</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Recipe</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Rating</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Comment</th>
-                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Helpful count</th>
-                
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left"></th>
-        
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Account</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Recipe</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Rating</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Comment</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">Helpful count</th>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @reviews.each do |review| %>
-      <%= content_tag :tr, id: dom_id(review), class: dom_class(review) do %>
-      
-
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= review.account %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= review.recipe %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= review.rating %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= review.comment %></td>
-              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= review.helpful_count %></td>
-      
-      
-        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to 'Show', review %></td>
-      
-      <% end %>
+        <%= content_tag :tr, id: dom_id(review), class: dom_class(review) do %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= review.account.username %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= review.recipe.title %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= review.rating %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= review.comment %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= review.helpful_count %></td>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-center text-black"><%= link_to 'Show', review %></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-</div>
 </div>

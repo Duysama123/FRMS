@@ -14,9 +14,18 @@
 
   <ul class="text-slate-700">
       <li>
+        <p class="font-semibold ">Image:</p>
+        <% if @account.image.attached? %>
+          <%= image_tag url_for(@account.image), alt: @account.username, class: "w-full max-w-xs mx-auto object-cover rounded-md shadow-md" %>
+        <% else %>
+          <p>No image available</p>
+        <% end %>
+      </li>
+      <li>
         <p class="font-semibold">Username:</p>
         <p><%= @account.username %></p>
       </li>
+    
       <li>
         <p class="font-semibold">Email:</p>
         <p><%= @account.email %></p>

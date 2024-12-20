@@ -41,9 +41,9 @@
     <%= form.number_field :servings, class: input_class %>
   </div>
 
-  <div class="mb-6">
-    <%= form.label :account_id, class: label_class %>
-    <%= form.select :account_id, options_from_collection_for_select(Account.all, :id, :username, selected = recipe.account_id), class: input_class %>
+<div class="mb-6">
+    <%= form.label :account_id, "Account", class: label_class %>
+    <%= form.collection_select :account_id, Account.all, :id, :username, { prompt: "Select an account" }, class: input_class %>
   </div>
 
   <div class="mb-6">

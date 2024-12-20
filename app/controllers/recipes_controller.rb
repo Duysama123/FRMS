@@ -3,8 +3,18 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index
-    @recipes = Recipe.all
+    if params[:query].present?
+      recipes = Recipe.search_by_title(params[:query])
+      if recipes.count == 1
+        redirect_to recipe_path(recipes.first)
+        return
+      end
+      @recipes = recipes
+    else
+      @recipes = Recipe.all
+    end
   end
+
 
   # GET /recipes/1 or /recipes/1.json
   def show
@@ -66,8 +76,7 @@ class RecipesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def recipe_params
       params.require(:recipe).permit(
-        :title, :description, :instruction, :prep_time, :cook_time, :servings, :image, :video, :video_url, :cook_method_id
-      )
+        :title, :description, :instruction, :prep_time, :cook_time, :servings, :account_id, :image, :video, :video_url, :cook_method_id)
     end
     
 end

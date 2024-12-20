@@ -1,7 +1,6 @@
 class ShoppingListsController < ApplicationController
   before_action :set_shopping_list, only: %i[show edit update destroy]
-  before_action :authenticate_user!, only: [:create] # Đảm bảo người dùng đã đăng nhập
-
+ 
   # GET /shopping_lists or /shopping_lists.json
   def index
     @shopping_lists = ShoppingList.all
@@ -10,8 +9,8 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1 or /shopping_lists/1.json
   def show
     @shopping_list = ShoppingList.find(params[:id])
-  # Check associations
-  Rails.logger.debug(@shopping_list.inspect)
+    # Check associations
+    Rails.logger.debug(@shopping_list.inspect)
   end
 
   # GET /shopping_lists/new
@@ -41,7 +40,6 @@ class ShoppingListsController < ApplicationController
     end
   end
   
-
   # PATCH/PUT /shopping_lists/1 or /shopping_lists/1.json
   def update
     respond_to do |format|
@@ -73,6 +71,6 @@ class ShoppingListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shopping_list_params
-      params.require(:shopping_list).permit(:account_id, :recipe_id, :ingredient_id, :quantity, :unit, :purchased)
+      params.require(:shopping_list).permit(:account_id, :recipe_id, :ingredient_id, :quantity, :unit, :purchased, :cook_method_id)
     end
 end

@@ -23,4 +23,7 @@ class ShoppingList < ApplicationRecord
   def set_default_purchased
     self.purchased ||= false
   end
+  def round_quantity
+    self.quantity = quantity.to_i if quantity.to_f == quantity.to_i
+  end
 end

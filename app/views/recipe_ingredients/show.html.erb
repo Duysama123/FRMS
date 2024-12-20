@@ -27,7 +27,10 @@
       </li>
       <li>
         <p class="font-semibold">Quantity:</p>
-        <p><%= @recipe_ingredient.quantity %></p>
+        <p>
+        <%= @recipe_ingredient.quantity.to_i == @recipe_ingredient.quantity ? @recipe_ingredient.quantity.to_i : @recipe_ingredient.quantity %>
+      </p>
+
       </li>
       <li>
         <p class="font-semibold">Unit:</p>

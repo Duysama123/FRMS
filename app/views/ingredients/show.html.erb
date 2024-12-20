@@ -36,33 +36,15 @@
     </li>
   </ul>
 
-  <!-- Nút View Nutrition Info căn giữa -->
+   <!-- Nút View Nutrition Info căn giữa -->
   <div class="mt-6 flex justify-center">
-    <%= link_to 'View Nutrition Info', "#", 
-                class: button_class(theme: 'primary') + ' px-6 py-2 rounded-full', 
-                id: "view-nutrition-info-button", 
-                data: { nutrition_info_id: @ingredient.nutrition_info&.id } %>
+    <% if @ingredient.nutrition_info %>
+      <%= link_to 'View Nutrition Info', nutrition_info_path(@ingredient.nutrition_info), 
+                  class: button_class(theme: 'primary') + ' px-6 py-2 rounded-full', 
+                  id: "view-nutrition-info-button" %>
+    <% else %>
+      <p class="text-gray-500 italic">No Nutrition Info available</p>
+    <% end %>
   </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("view-nutrition-info-button");
-
-  if (button) {
-    button.addEventListener("click", (event) => {
-      event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
-      const nutritionInfoId = button.dataset.nutritionInfoId;
-
-      if (nutritionInfoId) {
-        // Điều hướng tới trang Nutrition Info nếu ID tồn tại
-        window.location.href = `/nutrition_infos/${nutritionInfoId}`;
-      } else {
-        // Hiển thị thông báo nếu Nutrition Info không tồn tại
-        console.log("No nutrition info available for this ingredient.");
-        alert("This ingredient does not have nutrition info yet.");
-      }
-    });
-  }
-});
-</script>

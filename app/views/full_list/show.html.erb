@@ -1,0 +1,87 @@
+<h1 class="text-3xl font-bold text-center mb-6 text-blue-600">Full Shopping List</h1>
+
+<!-- Display Account, Recipe, and Cooking Method Information -->
+<div class="mb-6 text-center">
+  <p class="text-lg font-medium text-gray-800">Account: <span class="text-blue-500"><%= @shopping_list_items.first.account.username %></span></p>
+  <p class="text-lg font-medium text-gray-800">Recipe: <span class="text-blue-500"><%= @shopping_list_items.first.recipe.title %></span></p>
+  <p class="text-lg font-medium text-gray-800">Cooking Method: <span class="text-blue-500"><%= @shopping_list_items.first.cook_method.name %></span></p>
+</div>
+
+<!-- Shopping List Table -->
+<% if @shopping_list_items.present? %>
+  <div class="overflow-x-auto">
+    <!-- Style section for the table -->
+    <style>
+      table {
+        width: 100%;
+        max-width: 1000px; /* Giới hạn chiều rộng tối đa */
+        border-collapse: collapse;
+        margin: 20px auto; /* Canh giữa bảng */
+      }
+
+      th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #4C51BF;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #ddd;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .text-red-500 {
+        color: red;
+      }
+
+      /* Điều chỉnh cột để không bị tràn ra ngoài */
+      td, th {
+        word-wrap: break-word; /* Nếu văn bản quá dài sẽ xuống dòng */
+        white-space: normal;  /* Cho phép text tự động xuống dòng khi cần */
+      }
+
+      /* Căn giữa cho các cột Quantity, Unit và Purchased */
+      .centered {
+        text-align: center;
+      }
+    </style>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ingredient</th>
+          <th class="centered">Quantity</th> <!-- Căn giữa cột Quantity -->
+          <th class="centered">Unit</th>     <!-- Căn giữa cột Unit -->
+          <th class="centered">Purchased</th> <!-- Căn giữa cột Purchased -->
+        </tr>
+      </thead>
+      <tbody>
+        <% @shopping_list_items.each do |item| %>
+          <tr>
+            <td><%= item.ingredient.name %></td>
+            <td class="centered"><%= item.quantity.to_i == item.quantity ? item.quantity.to_i : item.quantity %></td> <!-- Căn giữa dữ liệu cột Quantity -->
+            <td class="centered"><%= item.unit %></td>     <!-- Căn giữa dữ liệu cột Unit -->
+            <td class="centered">
+              <!-- Display 'Purchased' status (true/false) -->
+              <%= item.purchased ? "✔" : "✘" %>
+            </td> <!-- Display Purchase Status -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-center text-red-500">No items found for this shopping list.</p>
+<% end %>
