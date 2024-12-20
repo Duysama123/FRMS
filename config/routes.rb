@@ -2,7 +2,6 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  
   # Chỉ cho phép người dùng admin truy cập vào Sidekiq
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
@@ -28,6 +27,14 @@ Rails.application.routes.draw do
 
     resources :nutrition_infos
     resources :cook_methods
+      get 'dashboard', to: 'dashboard#index'
+    get '/dashboard/data', to: 'dashboard#data'
+    # Định nghĩa các route cho API
+  get '/dashboard/recipes_by_day', to: 'dashboard#recipes_by_day'
+  get '/dashboard/recipes_by_method', to: 'dashboard#recipes_by_method'
+  get '/dashboard/reviews_by_recipe', to: 'dashboard#reviews_by_recipe'
+  get '/dashboard/ingredients_usage', to: 'dashboard#ingredients_usage'
+  get '/dashboard/shopping_list_status', to: 'dashboard#shopping_list_status'
   end
 
   devise_for :users

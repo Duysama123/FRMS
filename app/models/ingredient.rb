@@ -8,10 +8,8 @@ class Ingredient < ApplicationRecord
   has_many :recipes, through: :recipe_ingredients
   has_many :shopping_lists
   has_one :nutrition_info
-
   # Tài nguyên hình ảnh đính kèm cho Ingredient
   has_one_attached :image
-
   # Validations
   # Xác thực rằng 'name' không được để trống, có độ dài tối đa là 50 ký tự và phải là duy nhất
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
@@ -19,7 +17,6 @@ class Ingredient < ApplicationRecord
   validates :description, presence: true
   # Xác thực tùy chỉnh cho hình ảnh đính kèm
   validate :validate_image
-
   private
 
   # Phương thức xác thực tùy chỉnh cho hình ảnh đính kèm

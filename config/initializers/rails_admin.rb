@@ -1,6 +1,6 @@
 RailsAdmin.config do |config|
   config.asset_source = :sprockets
-
+  config.main_app_name = ['CookEase', 'Admin Dashboard']
   ### Popular gems integration
 
   ## == Devise ==

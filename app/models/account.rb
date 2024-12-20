@@ -4,13 +4,11 @@ class Account < ApplicationRecord
   has_many :recipes
   has_many :reviews
   has_many :shopping_lists
-  
   # Phương thức để lấy danh sách tên của các associations trong model
   # Sử dụng `reflect_on_all_associations` để trả về danh sách tên của tất cả các associations đã định nghĩa trong model.
   def self.association_names
     self.reflect_on_all_associations.map(&:name)
   end
-
   # Tài khoản chỉ có một hình ảnh đính kèm
   has_one_attached :image
 

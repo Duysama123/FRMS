@@ -1,0 +1,256 @@
+<head>
+    <style>
+/* app/assets/stylesheets/dashboard.css */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7fc;
+  color: #333;
+}
+
+h1 {
+  font-family: 'Lora', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #4b9cd3;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: #4b9cd3;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Bố cục chính */
+.row {
+  display: grid;
+  gap: 20px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.first-row {
+  grid-template-columns: 2fr 1fr 1fr; /* Dòng đầu tiên với 3 cột */
+}
+
+.second-row {
+  grid-template-columns: 2fr 1fr; /* Dòng thứ hai với 2 cột */
+}
+
+/* Cột lớn (dành cho Recipe Created by Day và Ingredients Used in Recipes) */
+.column.large {
+  grid-column: span 1; /* Cột lớn chiếm 1 cột trong grid */
+}
+
+/* Dòng thứ hai: Ingredients Used in Recipes chiếm 2/3, Shopping List Status chiếm 1/3 */
+.column {
+  grid-column: span 1;
+}
+
+/* Bố cục điều chỉnh cho các màn hình nhỏ */
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr; /* Chuyển sang 1 cột khi màn hình nhỏ */
+  }
+
+  .column.large {
+    grid-column: span 1; /* Cột lớn sẽ chiếm toàn bộ chiều rộng */
+  }
+}
+
+/* Canvas */
+canvas {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/* Thêm giới hạn chiều cao cho các cột */
+.first-row, .second-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  margin: 10px;
+  max-width: 32%;
+  box-sizing: border-box;
+}
+
+.large {
+  flex: 2;
+  max-width: 65%;
+}
+
+@media (max-width: 768px) {
+  .column {
+    max-width: 100%;
+  }
+
+  .large {
+    max-width: 100%;
+  }
+}
+
+
+    </style>
+</head>
+<!-- app/views/dashboard/index.html.erb -->
+
+<h1>Dashboard</h1>
+
+<!-- Dòng đầu tiên -->
+<div class="row first-row">
+  <div class="column large">
+    <h2>Recipes Created by Day</h2>
+    <canvas id="recipes_by_day_chart" width="500" height="200"></canvas>
+  </div>
+
+  <div class="column">
+    <h2>Recipes by Cooking Method</h2>
+    <canvas id="recipes_by_method_chart" width="300" height="100"></canvas>
+  </div>
+
+  <div class="column">
+    <h2>Reviews by Recipe</h2>
+    <canvas id="reviews_by_recipe_chart" width="300" height="100"></canvas>
+  </div>
+</div>
+
+<!-- Dòng thứ hai -->
+<div class="row second-row">
+  <div class="column large">
+    <h2>Ingredients Used in Recipes</h2>
+    <canvas id="ingredients_usage_chart" width="500" height="180"></canvas>
+  </div>
+
+  <div class="column">
+    <h2>Shopping List Status</h2>
+    <canvas id="shopping_list_status_chart" width="300" height="180"></canvas>
+  </div>
+</div>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Fetch data for "Recipes Created by Day"
+    fetch('/dashboard/recipes_by_day')
+      .then(response => response.json())
+      .then(data => {
+        // Prepare the data
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+
+        // Create the chart using Chart.js
+        const ctx = document.getElementById("recipes_by_day_chart").getContext("2d");
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Recipes Created by Day',
+              data: values,
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          }
+        });
+      });
+
+    // Fetch data for "Recipes by Cooking Method"
+    fetch('/dashboard/recipes_by_method')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById("recipes_by_method_chart").getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: Object.keys(data),
+            datasets: [{
+              label: 'Recipes by Cooking Method',
+              data: Object.values(data),
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+
+    // Fetch data for "Reviews by Recipe"
+    fetch('/dashboard/reviews_by_recipe')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById("reviews_by_recipe_chart").getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: Object.keys(data),
+            datasets: [{
+              label: 'Reviews by Recipe',
+              data: Object.values(data),
+              backgroundColor: 'rgb(153, 102, 255)',
+              borderColor: 'rgb(153, 102, 255)',
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+
+    // Fetch data for "Ingredients Used in Recipes"
+    fetch('/dashboard/ingredients_usage')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById("ingredients_usage_chart").getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: Object.keys(data),
+            datasets: [{
+              label: 'Ingredients Used in Recipes',
+              data: Object.values(data),
+              backgroundColor: 'rgb(54, 162, 235)',
+              borderColor: 'rgb(54, 162, 235)',
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+
+    // Fetch data for "Shopping List Status"
+    fetch('/dashboard/shopping_list_status')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById("shopping_list_status_chart").getContext("2d");
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Purchased', 'Not Purchased'],
+            datasets: [{
+              data: [data.true, data.false],
+              backgroundColor: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)'],
+              borderColor: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)'],
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+  });
+</script>
+

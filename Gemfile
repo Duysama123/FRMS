@@ -87,6 +87,9 @@ gem 'rack-cors'
 
 gem 'rails_admin'
 
-
-
-gem "sassc-rails"
+gem 'chartkick'
+gem 'groupdate'  # hỗ trợ nhóm dữ liệu theo ngày, tuần, tháng...
+gem 'paper_trail'
+gem 'cancancan'
+gem 'pundit'
+gem 'gravatar_image_tag'
